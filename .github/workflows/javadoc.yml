@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
           cache: gradle
       - name: Grant perms to Gradle executable
-      - run: chmod +x gradlew
+        run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
       
