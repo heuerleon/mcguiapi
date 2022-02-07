@@ -57,6 +57,7 @@ The reason why you need to use the GUIFactory is because every GUI has their own
 Now you can start designing your GUI by adding some items and adding some click actions.
 ```java
 gui.set(row, column, item, (event) -> {
+  event.setCancelled(true); // not a must, but without this line the item will be stealable
   // insert anything you'd like to do when the item is clicked
 });
 // you can use the ItemBuilder class, which is included in the API, for adding items
