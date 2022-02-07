@@ -1,5 +1,6 @@
 # MC GUI API [![](https://jitpack.io/v/heuerleon/mcguiapi.svg)](https://jitpack.io/#heuerleon/mcguiapi)
 MC GUI API is an API for creating graphical user interfaces using inventories in minecraft.
+- [Docs](https://heuerleon.github.io/mcguiapi/)
 
 ## Adding MC GUI API to your dependencies
 If you use Maven:
@@ -61,4 +62,4 @@ Once you have finished, you can show the GUI to a player.
 gui.show(player);
 ```
 
-These are the basics of creating GUIs. For more information, read through the JavaDocs.
+These are the basics of creating GUIs. For more information, read through the [Javadoc](https://heuerleon.github.io/mcguiapi/).
