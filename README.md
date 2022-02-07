@@ -39,7 +39,7 @@ dependencies {
 }
 ```
 
-Do not forget to shade the dependency into your jar using https://github.com/johnrengelman/shadow, for instance. This is not a standalone Minecraft plugin and you will get errors otherwise.
+Do not forget to shadow the dependency into your jar. This is not a standalone Minecraft plugin and you will get errors otherwise.
 
 ## Starting to use the API
 You first need to create a GUI Factory.
