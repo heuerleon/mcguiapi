@@ -1,4 +1,9 @@
-# MC GUI API ![GitHub release (latest by date)](https://img.shields.io:/github/v/release/heuerleon/mcguiapi) [![](https://jitpack.io/v/heuerleon/mcguiapi.svg)](https://jitpack.io/#heuerleon/mcguiapi) ![GitHub](https://img.shields.io:/github/license/heuerleon/mcguiapi) ![GitHub last commit](https://img.shields.io:/github/last-commit/heuerleon/mcguiapi) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=heuerleon_mcguiapi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=heuerleon_mcguiapi)
+![GitHub release (latest by date)](https://img.shields.io:/github/v/release/heuerleon/mcguiapi)
+[![](https://jitpack.io/v/heuerleon/mcguiapi.svg)](https://jitpack.io/#heuerleon/mcguiapi)
+![GitHub](https://img.shields.io:/github/license/heuerleon/mcguiapi)
+![GitHub last commit](https://img.shields.io:/github/last-commit/heuerleon/mcguiapi)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=heuerleon_mcguiapi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=heuerleon_mcguiapi)
+# MC GUI API
 MC GUI API is an API for creating graphical user interfaces using inventories in minecraft.
 - [Docs](https://heuerleon.github.io/mcguiapi/)
 
