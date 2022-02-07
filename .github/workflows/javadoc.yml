@@ -24,7 +24,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Publish to GitHub Pages
-        uses: tsunematsu21/actions-publish-gh-pages@v1
+        uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
         with:
           dir: build/docs/javadoc
           token: ${{ secrets.ACCESS_TOKEN }}
