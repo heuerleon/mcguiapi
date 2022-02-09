@@ -4,6 +4,12 @@ import de.leonheuer.mcguiapi.exceptions.ForbiddenRowAmountException;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class that can create new GUIs and register their listeners to a Minecraft Plugin.
+ * It is necessary for creating GUIs because every GUI needs their own listener.
+ * Since the GUI API is not a standalone plugin that can register listeners to itself, there must be another plugin
+ * given to register the listeners to.
+ */
 public class GUIFactory {
 
     private final JavaPlugin plugin;

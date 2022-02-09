@@ -16,13 +16,28 @@ public class ItemBuilder implements Cloneable {
 
     private final ItemStack itemStack;
 
+    // use static method to instantiate a pattern
+    private ItemBuilder(Material material) {
+        itemStack = new ItemStack(material);
+    }
+
     /**
      * Creates a new builder instance for creating an item stack.
      * @param material The material of the item
-     * @param amount The amount
+     * @return The item builder instance
      */
-    public ItemBuilder(Material material, int amount) {
-        itemStack = new ItemStack(material, amount);
+    public static ItemBuilder of(Material material) {
+        return new ItemBuilder(material);
+    }
+
+    /**
+     * Sets the amount of the item.
+     * @param amount The amount
+     * @return The item builder instance
+     */
+    public ItemBuilder amount(int amount) {
+        itemStack.setAmount(amount);
+        return this;
     }
 
     /**
@@ -55,7 +70,7 @@ public class ItemBuilder implements Cloneable {
      * Gets the current item stack that has been built by the builder.
      * @return The created item stack
      */
-    public ItemStack getResult() {
+    public ItemStack getItem() {
         return itemStack;
     }
 

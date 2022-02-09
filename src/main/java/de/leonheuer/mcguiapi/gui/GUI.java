@@ -16,6 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * GUI class that contains items with different click actions.
+ * Each item can have another click action, and close actions can be defined.
+ * The GUI can also be formatted with a GUIPattern.
+ * It can be shown to any player and handles every annoying part about creating GUIs in minecraft.
+ */
 public class GUI implements Cloneable {
 
     private final Inventory inv;
@@ -23,7 +29,7 @@ public class GUI implements Cloneable {
     private final HashMap<CloseCause, Consumer<Event>> closeActions = new HashMap<>();
     private final List<Player> viewers = new ArrayList<>();
 
-    // Use the GUIFactory to create new GUIs
+    // use GUIFactory to create a new GUI
     protected GUI(int rows) throws ForbiddenRowAmountException {
         if (rows < 1 || rows > 6) {
             throw new ForbiddenRowAmountException("Only 1 to 6 rows are allowed, but " + rows + " rows were given.");
@@ -31,7 +37,7 @@ public class GUI implements Cloneable {
         inv = Bukkit.createInventory(null, rows * 9);
     }
 
-    // Use the GUIFactory to create new GUIs
+    // use GUIFactory to create a new GUI
     protected GUI(int rows, @NotNull String title) throws ForbiddenRowAmountException {
         if (rows < 1 || rows > 6) {
             throw new ForbiddenRowAmountException("Only 1 to 6 rows are allowed, but " + rows + " rows were given.");
@@ -101,6 +107,34 @@ public class GUI implements Cloneable {
      */
     public GUI removeCloseAction(@NotNull CloseCause cause) {
         closeActions.remove(cause);
+        return this;
+    }
+
+    /**
+     * Formats the gui with the specified pattern.
+     * @param pattern The pattern
+     * @return The current GUI instance
+     */
+    public GUI formatPattern(GUIPattern pattern) {
+        int index = pattern.getIndex();
+        for (String line : pattern.getLines()) {
+            int pos = 0;
+            for (char c : line.toCharArray()) {
+                if (index > inv.getSize() - 1) {
+                    return this;
+                }
+                if (pos > 8) {
+                    break;
+                }
+                if (!pattern.getPatternItems().containsKey(c)) {
+                    continue;
+                }
+                set(index, pattern.getPatternItems().get(c), event -> event.setCancelled(true));
+                index++;
+                pos++;
+            }
+            index = index + 8 - pos; // skip missing pattern characters for the line
+        }
         return this;
     }
 
