@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -22,11 +23,11 @@ import java.util.function.Consumer;
  * The GUI can also be formatted with a GUIPattern.
  * It can be shown to any player and handles every annoying part about creating GUIs in minecraft.
  */
-public class GUI implements Cloneable {
+public class GUI {
 
     private final Inventory inv;
     private final HashMap<Integer, Consumer<InventoryClickEvent>> clickActions = new HashMap<>();
-    private final HashMap<CloseCause, Consumer<Event>> closeActions = new HashMap<>();
+    private final EnumMap<CloseCause, Consumer<Event>> closeActions = new EnumMap<>(CloseCause.class);
     private final List<Player> viewers = new ArrayList<>();
 
     // use GUIFactory to create a new GUI
@@ -126,12 +127,11 @@ public class GUI implements Cloneable {
                 if (pos > 8) {
                     break;
                 }
-                if (!pattern.getPatternItems().containsKey(c)) {
-                    continue;
+                if (pattern.getPatternItems().containsKey(c)) {
+                    set(index, pattern.getPatternItems().get(c), event -> event.setCancelled(true));
+                    index++;
+                    pos++;
                 }
-                set(index, pattern.getPatternItems().get(c), event -> event.setCancelled(true));
-                index++;
-                pos++;
             }
             index = index + 8 - pos; // skip missing pattern characters for the line
         }
@@ -166,7 +166,7 @@ public class GUI implements Cloneable {
      * @param player The player to show the GUI to
      */
     public void show(@NotNull Player player) {
-        player.openInventory(clone().getInv()); // clone inventory because viewer could modify it
+        player.openInventory(inv);
         viewers.add(player);
     }
 
@@ -190,7 +190,7 @@ public class GUI implements Cloneable {
     }
 
     // for internal use only
-    protected HashMap<CloseCause, Consumer<Event>> getCloseActions() {
+    protected EnumMap<CloseCause, Consumer<Event>> getCloseActions() {
         return closeActions;
     }
 
@@ -199,16 +199,4 @@ public class GUI implements Cloneable {
         return viewers;
     }
 
-    /**
-     * Clones the GUI, including the items and their click actions.
-     * @return The cloned GUI instance
-     */
-    @Override
-    public GUI clone() {
-        try {
-            return (GUI) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

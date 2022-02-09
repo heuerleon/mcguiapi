@@ -7,12 +7,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Builder utility class for easily creating item stacks.
  */
-public class ItemBuilder implements Cloneable {
+public class ItemBuilder {
 
     private final ItemStack itemStack;
 
@@ -46,7 +45,7 @@ public class ItemBuilder implements Cloneable {
      * @return The item builder instance
      */
     public ItemBuilder name(String name) {
-        itemStack.editMeta((meta) -> meta.displayName(Component.text(
+        itemStack.editMeta(meta -> meta.displayName(Component.text(
                 ChatColor.translateAlternateColorCodes('&', name)
         )));
         return this;
@@ -59,10 +58,10 @@ public class ItemBuilder implements Cloneable {
      */
     public ItemBuilder description(String... description) {
         List<Component> lore = Arrays.stream(description)
-                .map(line -> Component.text(
+                .map(line -> (Component) Component.text(
                         ChatColor.translateAlternateColorCodes('&', line)
-                )).collect(Collectors.toList());
-        itemStack.editMeta((meta) -> meta.lore(lore));
+                )).toList();
+        itemStack.editMeta(meta -> meta.lore(lore));
         return this;
     }
 
@@ -70,20 +69,8 @@ public class ItemBuilder implements Cloneable {
      * Gets the current item stack that has been built by the builder.
      * @return The created item stack
      */
-    public ItemStack getItem() {
+    public ItemStack asItem() {
         return itemStack;
     }
 
-    /**
-     * Clones the item builder.
-     * @return The cloned instance
-     */
-    @Override
-    public ItemBuilder clone() {
-        try {
-            return (ItemBuilder) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }
