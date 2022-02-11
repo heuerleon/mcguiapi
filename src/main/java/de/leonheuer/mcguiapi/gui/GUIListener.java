@@ -2,7 +2,9 @@ package de.leonheuer.mcguiapi.gui;
 
 import de.leonheuer.mcguiapi.enums.CloseCause;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -10,6 +12,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class GUIListener implements Listener {
 
@@ -21,7 +26,8 @@ public class GUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getWhoClicked() instanceof Player)) {
+        HumanEntity player = event.getWhoClicked();
+        if (!(player instanceof Player)) {
             return;
         }
         ItemStack item = event.getCurrentItem();
@@ -31,22 +37,36 @@ public class GUIListener implements Listener {
         if (event.getClickedInventory() == event.getWhoClicked().getInventory()) {
             return;
         }
-        if (gui.getViewers().contains((Player) event.getWhoClicked())) {
-            gui.getClickActions().get(event.getSlot()).accept(event);
+
+        int slot = event.getSlot();
+        if (gui.getViewers().contains(player)) {
+            if (gui.getUnStealableSlots().contains(slot)) {
+                event.setCancelled(true);
+            }
+            Consumer<InventoryClickEvent> defaultAction = gui.getDefaultClickAction();
+            if (defaultAction != null) {
+                defaultAction.accept(event);
+            }
+            Consumer<InventoryClickEvent> action = gui.getClickActions().get(slot);
+            if (action != null) {
+                action.accept(event);
+            }
         }
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!(event.getPlayer() instanceof Player)) {
+        HumanEntity player = event.getPlayer();
+        if (!(player instanceof Player)) {
             return;
         }
-        if (!gui.getViewers().contains((Player) event.getPlayer())) {
+        if (!gui.getViewers().contains(player)) {
             return;
         }
-        gui.getViewers().remove((Player) event.getPlayer());
-        if (gui.getCloseActions().containsKey(CloseCause.CLOSE)) {
-            gui.getCloseActions().get(CloseCause.CLOSE).accept(event);
+        gui.getViewers().remove(player);
+        BiConsumer<Event, Player> action = gui.getCloseActions().get(CloseCause.CLOSE);
+        if (action != null) {
+            action.accept(event, (Player) player);
         }
     }
 
@@ -57,18 +77,18 @@ public class GUIListener implements Listener {
         }
         gui.getViewers().remove(event.getPlayer());
         if (gui.getCloseActions().containsKey(CloseCause.QUIT)) {
-            gui.getCloseActions().get(CloseCause.QUIT).accept(event);
+            gui.getCloseActions().get(CloseCause.QUIT).accept(event, event.getPlayer());
         }
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        if (!gui.getViewers().contains(event.getEntity())) {
+        if (!gui.getViewers().contains(event.getPlayer())) {
             return;
         }
         gui.getViewers().remove(event.getEntity());
         if (gui.getCloseActions().containsKey(CloseCause.DEATH)) {
-            gui.getCloseActions().get(CloseCause.DEATH).accept(event);
+            gui.getCloseActions().get(CloseCause.DEATH).accept(event, event.getPlayer());
         }
     }
 
