@@ -1,4 +1,3 @@
-![Latest release](https://img.shields.io:/github/v/release/heuerleon/mcguiapi)
 [![JitPack](https://jitpack.io/v/heuerleon/mcguiapi.svg)](https://jitpack.io/#heuerleon/mcguiapi)
 ![License](https://img.shields.io:/github/license/heuerleon/mcguiapi)
 [![CodeQL](https://github.com/heuerleon/mcguiapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/heuerleon/mcguiapi/actions/workflows/codeql-analysis.yml)
