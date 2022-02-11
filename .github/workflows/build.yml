@@ -1,6 +1,10 @@
 name: Build
 
 on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -34,8 +38,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build
-      - name: Publish to GitHub Pages
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
-        with:
-          dir: build/docs/javadoc
-          token: ${{ secrets.ACCESS_TOKEN }}
