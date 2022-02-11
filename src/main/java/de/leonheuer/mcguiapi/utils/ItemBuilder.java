@@ -11,13 +11,18 @@ import java.util.List;
 /**
  * Builder utility class for easily creating item stacks.
  */
+@SuppressWarnings("unused")
 public class ItemBuilder {
 
     private final ItemStack itemStack;
 
     // use static method to instantiate a pattern
-    private ItemBuilder(Material material) {
+    ItemBuilder(Material material) {
         itemStack = new ItemStack(material);
+    }
+
+    ItemBuilder(ItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 
     /**
@@ -27,6 +32,15 @@ public class ItemBuilder {
      */
     public static ItemBuilder of(Material material) {
         return new ItemBuilder(material);
+    }
+
+    /**
+     * Creates a new builder instance for creating an item stack.
+     * @param itemStack The item stack to begin with
+     * @return The item builder instance
+     */
+    public static ItemBuilder of(ItemStack itemStack) {
+        return new ItemBuilder(itemStack);
     }
 
     /**

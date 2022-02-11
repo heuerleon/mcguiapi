@@ -22,7 +22,7 @@ If you use Maven:
   <dependency>
     <groupId>com.github.heuerleon</groupId>
     <artifactId>mcguiapi</artifactId>
-    <version>v1.3.0</version>
+    <version>v1.3.1</version>
   </dependency>
 </dependencies>
 ```
@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.github.heuerleon:mcguiapi:v1.3.0'
+  implementation 'com.github.heuerleon:mcguiapi:v1.3.1'
 }
 ```
 

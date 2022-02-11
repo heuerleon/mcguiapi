@@ -10,6 +10,7 @@ import java.util.List;
  * Builder class for a GUI pattern. Patterns contain lines of characters, each one standing for a defined item.
  * This can be useful for formatting a GUI with placeholders, for example.
  */
+@SuppressWarnings("unused")
 public class GUIPattern {
 
     private final List<String> lines;
@@ -17,7 +18,7 @@ public class GUIPattern {
     private int index = 0;
 
     // use static method to instantiate
-    private GUIPattern(List<String> lines) {
+    GUIPattern(List<String> lines) {
         this.lines = lines;
     }
 

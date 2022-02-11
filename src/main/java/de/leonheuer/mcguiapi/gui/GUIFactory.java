@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * Since the GUI API is not a standalone plugin that can register listeners to itself, there must be another plugin
  * given to register the listeners to.
  */
+@SuppressWarnings("unused")
 public class GUIFactory {
 
     private final JavaPlugin plugin;

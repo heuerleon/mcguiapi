@@ -25,6 +25,7 @@ import java.util.function.Consumer;
  * The GUI can also be formatted with a GUIPattern.
  * It can be shown to any player and handles every annoying part about creating GUIs in minecraft.
  */
+@SuppressWarnings("unused")
 public class GUI {
 
     private final Inventory inv;
