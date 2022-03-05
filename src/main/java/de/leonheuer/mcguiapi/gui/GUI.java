@@ -54,7 +54,27 @@ public class GUI {
 
     /**
      * Sets an item at the given slot and registers an action to be executed when the item is clicked.
-     *  Also sets whether the item can be stolen, i.e. taken out of the GUI.
+     * Also sets whether the item can be stolen, i.e. taken out of the GUI.
+     * @param index Index of the GUI slot
+     * @param itemStack Item to be set
+     * @param action Action to be executed when
+     * @return The current GUI instance
+     */
+    @NotNull
+    public GUI setItem(int index, @NotNull ItemStack itemStack, boolean stealable,
+                       @NotNull Consumer<InventoryClickEvent> action
+    ) {
+        inv.setItem(index, itemStack);
+        clickActions.put(index, action);
+        if (!stealable && !unStealableSlots.contains(index)) {
+            unStealableSlots.add(index);
+        }
+        return this;
+    }
+
+    /**
+     * Sets an item at the given slot and registers an action to be executed when the item is clicked.
+     * Also sets whether the item can be stolen, i.e. taken out of the GUI.
      * @param row Row of the GUI slot
      * @param column Column of the GUI slot
      * @param itemStack Item to be set
@@ -71,20 +91,14 @@ public class GUI {
 
     /**
      * Sets an item at the given slot and registers an action to be executed when the item is clicked.
-     *  Also sets whether the item can be stolen, i.e. taken out of the GUI.
      * @param index Index of the GUI slot
      * @param itemStack Item to be set
-     * @param stealable Whether the item should be stealable
      * @param action Action to be executed when
      * @return The current GUI instance
      */
     @NotNull
-    public GUI setItem(int index, @NotNull ItemStack itemStack, boolean stealable,
-                       @NotNull Consumer<InventoryClickEvent> action
-    ) {
-        inv.setItem(index, itemStack);
-        clickActions.put(index, action);
-        return this;
+    public GUI setItem(int index, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> action) {
+        return setItem(index, itemStack, false, action);
     }
 
     /**
@@ -98,31 +112,6 @@ public class GUI {
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> action) {
         return setItem(row * column - 1, itemStack, false, action);
-    }
-
-    /**
-     * Sets an item at the given slot and registers an action to be executed when the item is clicked.
-     * @param index Index of the GUI slot
-     * @param itemStack Item to be set
-     * @param action Action to be executed when
-     * @return The current GUI instance
-     */
-    @NotNull
-    public GUI setItem(int index, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> action) {
-        return setItem(index, itemStack, false, action);
-    }
-
-    /**
-     * Sets an item at the given slot. Also sets whether the item can be stolen, i.e. taken out of the GUI.
-     * @param row Row of the GUI slot
-     * @param column Column of the GUI slot
-     * @param itemStack Item to be set
-     * @param stealable Whether the item should be stealable
-     * @return The current GUI instance
-     */
-    @NotNull
-    public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable) {
-        return setItem(row * column - 1, itemStack, stealable);
     }
 
     /**
@@ -142,15 +131,16 @@ public class GUI {
     }
 
     /**
-     * Sets an item at the given slot.
+     * Sets an item at the given slot. Also sets whether the item can be stolen, i.e. taken out of the GUI.
      * @param row Row of the GUI slot
      * @param column Column of the GUI slot
      * @param itemStack Item to be set
+     * @param stealable Whether the item should be stealable
      * @return The current GUI instance
      */
     @NotNull
-    public GUI setItem(int row, int column, @NotNull ItemStack itemStack) {
-        return setItem(row * column - 1, itemStack);
+    public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable) {
+        return setItem(row * column - 1, itemStack, stealable);
     }
 
     /**
@@ -162,6 +152,18 @@ public class GUI {
     @NotNull
     public GUI setItem(int index, @NotNull ItemStack itemStack) {
         return setItem(index, itemStack, false);
+    }
+
+    /**
+     * Sets an item at the given slot.
+     * @param row Row of the GUI slot
+     * @param column Column of the GUI slot
+     * @param itemStack Item to be set
+     * @return The current GUI instance
+     */
+    @NotNull
+    public GUI setItem(int row, int column, @NotNull ItemStack itemStack) {
+        return setItem(row * column - 1, itemStack);
     }
 
     /**
