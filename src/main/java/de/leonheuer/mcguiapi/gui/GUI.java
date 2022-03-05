@@ -86,7 +86,7 @@ public class GUI {
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable,
                        @NotNull Consumer<InventoryClickEvent> action
     ) {
-        return setItem(row * column - 1, itemStack, stealable, action);
+        return setItem((row - 1) * 9 + column, itemStack, stealable, action);
     }
 
     /**
@@ -111,7 +111,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> action) {
-        return setItem(row * column - 1, itemStack, false, action);
+        return setItem((row - 1) * 9 + column, itemStack, false, action);
     }
 
     /**
@@ -140,7 +140,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable) {
-        return setItem(row * column - 1, itemStack, stealable);
+        return setItem((row - 1) * 9 + column, itemStack, stealable);
     }
 
     /**
@@ -163,18 +163,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack) {
-        return setItem(row * column - 1, itemStack);
-    }
-
-    /**
-     * Removes the item at the specified slot from the inventory. This will also remove the click action of the slot.
-     * @param row Row of the GUI slot
-     * @param column Column of the GUI slot
-     * @return The current GUI instance
-     */
-    @NotNull
-    public GUI removeItem(int row, int column) {
-        return removeItem(row * column - 1);
+        return setItem((row - 1) * 9 + column, itemStack);
     }
 
     /**
@@ -191,14 +180,14 @@ public class GUI {
     }
 
     /**
-     * Sets whether the slot of the GUI should allow items to be stolen from.
+     * Removes the item at the specified slot from the inventory. This will also remove the click action of the slot.
      * @param row Row of the GUI slot
      * @param column Column of the GUI slot
-     * @param stealable Whether the item should be stealable
      * @return The current GUI instance
      */
-    public GUI setStealable(int row, int column, boolean stealable) {
-        return setStealable(row * column - 1, stealable);
+    @NotNull
+    public GUI removeItem(int row, int column) {
+        return removeItem((row - 1) * 9 + column);
     }
 
     /**
@@ -219,14 +208,14 @@ public class GUI {
     }
 
     /**
-     * Sets an action to perform when clicking the specified slot.
+     * Sets whether the slot of the GUI should allow items to be stolen from.
      * @param row Row of the GUI slot
      * @param column Column of the GUI slot
-     * @param action Action to perform
+     * @param stealable Whether the item should be stealable
      * @return The current GUI instance
      */
-    public GUI setClickAction(int row, int column, @NotNull Consumer<InventoryClickEvent> action) {
-        return setClickAction(row * column - 1, action);
+    public GUI setStealable(int row, int column, boolean stealable) {
+        return setStealable((row - 1) * 9 + column, stealable);
     }
 
     /**
@@ -241,6 +230,17 @@ public class GUI {
     }
 
     /**
+     * Sets an action to perform when clicking the specified slot.
+     * @param row Row of the GUI slot
+     * @param column Column of the GUI slot
+     * @param action Action to perform
+     * @return The current GUI instance
+     */
+    public GUI setClickAction(int row, int column, @NotNull Consumer<InventoryClickEvent> action) {
+        return setClickAction((row - 1) * 9 + column, action);
+    }
+
+    /**
      * Sets an action that will always be performed when something in the GUI is clicked.
      * @param defaultClickAction Action to perform
      * @return The current GUI instance
@@ -252,22 +252,22 @@ public class GUI {
 
     /**
      * Removes the click action of the specified slot.
-     * @param row Row of the GUI slot
-     * @param column Column of the GUI slot
-     * @return The current GUI instance
-     */
-    public GUI removeClickAction(int row, int column) {
-        return removeClickAction(row * column - 1);
-    }
-
-    /**
-     * Removes the click action of the specified slot.
      * @param index Index of the GUI slot
      * @return The current GUI instance
      */
     public GUI removeClickAction(int index) {
         clickActions.remove(index);
         return this;
+    }
+
+    /**
+     * Removes the click action of the specified slot.
+     * @param row Row of the GUI slot
+     * @param column Column of the GUI slot
+     * @return The current GUI instance
+     */
+    public GUI removeClickAction(int row, int column) {
+        return removeClickAction((row - 1) * 9 + column);
     }
 
     /**
