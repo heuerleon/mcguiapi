@@ -86,7 +86,7 @@ public class GUI {
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable,
                        @NotNull Consumer<InventoryClickEvent> action
     ) {
-        return setItem((row - 1) * 9 + column, itemStack, stealable, action);
+        return setItem((row - 1) * 9 + column - 1, itemStack, stealable, action);
     }
 
     /**
@@ -111,7 +111,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> action) {
-        return setItem((row - 1) * 9 + column, itemStack, false, action);
+        return setItem((row - 1) * 9 + column - 1, itemStack, false, action);
     }
 
     /**
@@ -140,7 +140,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable) {
-        return setItem((row - 1) * 9 + column, itemStack, stealable);
+        return setItem((row - 1) * 9 + column - 1, itemStack, stealable);
     }
 
     /**
@@ -163,7 +163,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack) {
-        return setItem((row - 1) * 9 + column, itemStack);
+        return setItem((row - 1) * 9 + column - 1, itemStack);
     }
 
     /**
@@ -187,7 +187,7 @@ public class GUI {
      */
     @NotNull
     public GUI removeItem(int row, int column) {
-        return removeItem((row - 1) * 9 + column);
+        return removeItem((row - 1) * 9 + column - 1);
     }
 
     /**
@@ -215,7 +215,7 @@ public class GUI {
      * @return The current GUI instance
      */
     public GUI setStealable(int row, int column, boolean stealable) {
-        return setStealable((row - 1) * 9 + column, stealable);
+        return setStealable((row - 1) * 9 + column - 1, stealable);
     }
 
     /**
@@ -237,7 +237,7 @@ public class GUI {
      * @return The current GUI instance
      */
     public GUI setClickAction(int row, int column, @NotNull Consumer<InventoryClickEvent> action) {
-        return setClickAction((row - 1) * 9 + column, action);
+        return setClickAction((row - 1) * 9 + column - 1, action);
     }
 
     /**
@@ -267,7 +267,7 @@ public class GUI {
      * @return The current GUI instance
      */
     public GUI removeClickAction(int row, int column) {
-        return removeClickAction((row - 1) * 9 + column);
+        return removeClickAction((row - 1) * 9 + column - 1);
     }
 
     /**
