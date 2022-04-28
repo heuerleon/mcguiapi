@@ -22,7 +22,7 @@ If you use Maven:
   <dependency>
     <groupId>com.github.heuerleon</groupId>
     <artifactId>mcguiapi</artifactId>
-    <version>v1.3.2</version>
+    <version>v1.3.3</version>
   </dependency>
 </dependencies>
 ```
@@ -36,8 +36,8 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.github.heuerleon:mcguiapi:v1.3.2'
+  implementation 'com.github.heuerleon:mcguiapi:v1.3.3'
 }
 ```
 
-Do not forget to shadow the dependency into your jar. This is not a standalone Minecraft plugin and you will get errors otherwise.
+Do not forget to shadow the dependency into your jar. This is not a standalone Minecraft plugin.
