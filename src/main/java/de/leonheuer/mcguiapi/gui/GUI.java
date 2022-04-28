@@ -2,6 +2,7 @@ package de.leonheuer.mcguiapi.gui;
 
 import de.leonheuer.mcguiapi.enums.CloseCause;
 import de.leonheuer.mcguiapi.exceptions.ForbiddenRowAmountException;
+import de.leonheuer.mcguiapi.utils.GUIUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -86,7 +87,7 @@ public class GUI {
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable,
                        @NotNull Consumer<InventoryClickEvent> action
     ) {
-        return setItem((row - 1) * 9 + column - 1, itemStack, stealable, action);
+        return setItem(GUIUtils.calculateIndex(row, column), itemStack, stealable, action);
     }
 
     /**
@@ -111,7 +112,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, @NotNull Consumer<InventoryClickEvent> action) {
-        return setItem((row - 1) * 9 + column - 1, itemStack, false, action);
+        return setItem(GUIUtils.calculateIndex(row, column), itemStack, false, action);
     }
 
     /**
@@ -140,7 +141,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack, boolean stealable) {
-        return setItem((row - 1) * 9 + column - 1, itemStack, stealable);
+        return setItem(GUIUtils.calculateIndex(row, column), itemStack, stealable);
     }
 
     /**
@@ -163,7 +164,7 @@ public class GUI {
      */
     @NotNull
     public GUI setItem(int row, int column, @NotNull ItemStack itemStack) {
-        return setItem((row - 1) * 9 + column - 1, itemStack);
+        return setItem(GUIUtils.calculateIndex(row, column), itemStack);
     }
 
     /**
@@ -187,7 +188,7 @@ public class GUI {
      */
     @NotNull
     public GUI removeItem(int row, int column) {
-        return removeItem((row - 1) * 9 + column - 1);
+        return removeItem(GUIUtils.calculateIndex(row, column));
     }
 
     /**
@@ -215,7 +216,7 @@ public class GUI {
      * @return The current GUI instance
      */
     public GUI setStealable(int row, int column, boolean stealable) {
-        return setStealable((row - 1) * 9 + column - 1, stealable);
+        return setStealable(GUIUtils.calculateIndex(row, column), stealable);
     }
 
     /**
@@ -237,7 +238,7 @@ public class GUI {
      * @return The current GUI instance
      */
     public GUI setClickAction(int row, int column, @NotNull Consumer<InventoryClickEvent> action) {
-        return setClickAction((row - 1) * 9 + column - 1, action);
+        return setClickAction(GUIUtils.calculateIndex(row, column), action);
     }
 
     /**
@@ -267,7 +268,7 @@ public class GUI {
      * @return The current GUI instance
      */
     public GUI removeClickAction(int row, int column) {
-        return removeClickAction((row - 1) * 9 + column - 1);
+        return removeClickAction(GUIUtils.calculateIndex(row, column));
     }
 
     /**
@@ -306,7 +307,7 @@ public class GUI {
      * @param pattern The pattern
      * @return The current GUI instance
      */
-    public GUI formatPattern(GUIPattern pattern) {
+    public GUI formatPattern(@NotNull GUIPattern pattern) {
         int index = pattern.getIndex();
         for (String line : pattern.getLines()) {
             int pos = 0;
@@ -319,9 +320,9 @@ public class GUI {
                 }
                 if (pattern.getPatternItems().containsKey(c)) {
                     setItem(index, pattern.getPatternItems().get(c), false);
-                    index++;
-                    pos++;
                 }
+                index++;
+                pos++;
             }
             index = index + 8 - pos; // skip missing pattern characters for the line
         }
