@@ -3,7 +3,11 @@ package de.leonheuer.mcguiapi.utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +15,7 @@ import java.util.List;
 /**
  * Builder utility class for easily creating item stacks.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ItemBuilder {
 
     private final ItemStack itemStack;
@@ -30,7 +34,8 @@ public class ItemBuilder {
      * @param material The material of the item
      * @return The item builder instance
      */
-    public static ItemBuilder of(Material material) {
+    @Contract("_ -> new")
+    public static @NotNull ItemBuilder of(Material material) {
         return new ItemBuilder(material);
     }
 
@@ -39,7 +44,8 @@ public class ItemBuilder {
      * @param itemStack The item stack to begin with
      * @return The item builder instance
      */
-    public static ItemBuilder of(ItemStack itemStack) {
+    @Contract(value = "_ -> new", pure = true)
+    public static @NotNull ItemBuilder of(ItemStack itemStack) {
         return new ItemBuilder(itemStack);
     }
 
@@ -76,6 +82,41 @@ public class ItemBuilder {
                         ChatColor.translateAlternateColorCodes('&', line)
                 )).toList();
         itemStack.editMeta(meta -> meta.lore(lore));
+        return this;
+    }
+
+    /**
+     * Enchants the item with the given enchantment and level.
+     * @param enchantment The enchantment
+     * @param level The level
+     * @return The item builder instance
+     */
+    public ItemBuilder enchant(Enchantment enchantment, int level) {
+        itemStack.addUnsafeEnchantment(enchantment, level);
+        return this;
+    }
+
+    /**
+     * Adds all given item flags to the item.
+     * @param flags The item flags
+     * @return The item builder instance
+     */
+    public ItemBuilder addFlags(ItemFlag... flags) {
+        itemStack.addItemFlags(flags);
+        return this;
+    }
+
+    /**
+     * Makes the item glow.
+     * @return The item builder instance
+     */
+    public ItemBuilder glowing() {
+        if (itemStack.getType() == Material.FISHING_ROD) {
+            enchant(Enchantment.DEPTH_STRIDER, 1);
+        } else {
+            enchant(Enchantment.LURE, 1);
+        }
+        addFlags(ItemFlag.HIDE_ENCHANTS);
         return this;
     }
 

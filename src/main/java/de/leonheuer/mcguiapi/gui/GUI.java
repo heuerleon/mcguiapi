@@ -324,7 +324,7 @@ public class GUI {
                 index++;
                 pos++;
             }
-            index = index + 8 - pos; // skip missing pattern characters for the line
+            index = index + 9 - pos; // skip missing pattern characters for the line
         }
         return this;
     }
